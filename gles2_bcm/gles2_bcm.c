@@ -50,7 +50,7 @@ static void bcm_init(struct bcm* bcm)
     uint32_t width = state.display.hdmi.width;
     uint32_t height = state.display.hdmi.height;
 
-    // printf("HDMI output = %ux%u@%u\n", width, height, state.display.hdmi.frame_rate);
+    printf("HDMI output = %ux%u@%u\n", width, height, state.display.hdmi.frame_rate);
 
     VC_RECT_T dst = { 0, 0, width, height };
     VC_RECT_T src = { 0, 0, width << 16, height << 16 };
@@ -82,7 +82,7 @@ static void bcm_done(struct bcm* bcm)
 
 static void egl_init(struct bcm* bcm, struct egl* egl)
 {
-    // printf("EGL client extension = %s\n", eglQueryString(EGL_NO_DISPLAY, EGL_EXTENSIONS));
+    printf("EGL client extension = %s\n", eglQueryString(EGL_NO_DISPLAY, EGL_EXTENSIONS));
 
     // if this function fails with "* failed to add service - already in use?" text on output
     // this probably means you have vc4 driver loaded in /boot/config.txt, remove it
@@ -93,10 +93,10 @@ static void egl_init(struct bcm* bcm, struct egl* egl)
     EGLBoolean ok = eglInitialize(egl->display, &major, &minor);
     assert(ok && "cannot initialize EGL display");
 
-    // printf("EGL_VENDOR = %s\n", eglQueryString(display, EGL_VENDOR));
-    // printf("EGL_VERSION = %s\n", eglQueryString(display, EGL_VERSION));
-    // printf("EGL_CLIENT_APIS = %s\n", eglQueryString(display, EGL_CLIENT_APIS));
-    // printf("EGL_EXTENSIONS = %s\n", eglQueryString(display, EGL_EXTENSIONS));
+    printf("EGL_VENDOR = %s\n", eglQueryString(egl->display, EGL_VENDOR));
+    printf("EGL_VERSION = %s\n", eglQueryString(egl->display, EGL_VERSION));
+    printf("EGL_CLIENT_APIS = %s\n", eglQueryString(egl->display, EGL_CLIENT_APIS));
+    printf("EGL_EXTENSIONS = %s\n", eglQueryString(egl->display, EGL_EXTENSIONS));
 
     ok = eglBindAPI(EGL_OPENGL_ES_API);
     assert(ok && "cannot use OpenGL ES API");
@@ -169,10 +169,10 @@ int main()
     bcm_init(&bcm);
     egl_init(&bcm, &egl);
 
-    // printf("GL_VENDOR = %s\n", glGetString(GL_VENDOR));
-    // printf("GL_RENDERER = %s\n", glGetString(GL_RENDERER));
-    // printf("GL_VERSION = %s\n", glGetString(GL_VERSION));
-    // printf("GL_EXTENSIONS = %s\n", glGetString(GL_EXTENSIONS));
+    printf("GL_VENDOR = %s\n", glGetString(GL_VENDOR));
+    printf("GL_RENDERER = %s\n", glGetString(GL_RENDERER));
+    printf("GL_VERSION = %s\n", glGetString(GL_VERSION));
+    printf("GL_EXTENSIONS = %s\n", glGetString(GL_EXTENSIONS));
 
     printf("rendering...\n");
 
